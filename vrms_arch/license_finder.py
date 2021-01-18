@@ -218,7 +218,7 @@ class LicenseFinder(object):
 
             if len(free_licenses) > 0:
                 free_pkgs.append(pkg)
-            elif len(amb_licenses) > 0:
+            elif len(amb_licenses) > 0 or not licenses:
                 self.unknown_packages.add(pkg)
             else:
                 self.nonfree_packages.add(pkg)
