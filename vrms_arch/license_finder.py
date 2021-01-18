@@ -243,11 +243,11 @@ class LicenseFinder(object):
     def list_all_unknown_packages(self):
         print("Packages of unknown license on this system: %d" % len(self.unknown_packages), file=sys.stderr)
 
-        for upackage in self.unknown_packages:
+        for upackage in sorted(self.unknown_packages, key=lambda pkg: pkg.name):
             print("%s: %s" % (upackage.name, upackage.licenses))
 
     def list_all_nonfree_packages(self):
-        for nfpackage in self.nonfree_packages:
+        for nfpackage in sorted(self.nonfree_packages, key=lambda pkg: pkg.name):
             print("%s: %s" % (nfpackage.name, nfpackage.licenses))
 
         print("\nNon-free packages: %d\n" % len(self.nonfree_packages), file=sys.stderr)
