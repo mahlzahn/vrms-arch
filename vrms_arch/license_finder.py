@@ -175,6 +175,21 @@ FREE_LICENSES = [clean_license_name(license) for license in [
     'ZPL',
 ]]
 
+# Licenses with shared source code but with ethical restrictions -
+# technically not open source but deserve mention
+# see https://ethicalsource.dev/
+ETHICAL_LICENSES = [clean_license_name(license) for license in [
+    'custom:BSD and JSON ("Good, not Evil")', # jslint
+    'custom:Anti-966',
+    'custom:Atmosphere',
+    'custom:CNPL',
+    'custom:Hippocratic 2.1',
+    'custom:Hippocratic',
+    'custom:NPL',
+    'custom:NoHarm',
+    'custom:NoHarm-draft',
+]]
+
 class LicenseFinder(object):
     def __init__(self):
         # all of the seen (clean) license names with counts
@@ -188,6 +203,9 @@ class LicenseFinder(object):
 
         # packages with a known non-free license
         self.nonfree_packages = set()
+
+        # packages with a known "ethical" license
+        self.ethical_packages = set()
 
     def visit_db(self, db):
         pkgs = db.packages
@@ -215,6 +233,7 @@ class LicenseFinder(object):
 
             free_licenses = list(filter(lambda x: x in FREE_LICENSES, licenses))
             amb_licenses = list(filter(lambda x: x in AMBIGUOUS_LICENSES, licenses))
+            ethical_licenses = list(filter(lambda x: x in ETHICAL_LICENSES, licenses))
 
             if len(free_licenses) > 0:
                 free_pkgs.append(pkg)
@@ -222,6 +241,10 @@ class LicenseFinder(object):
                 self.unknown_packages.add(pkg)
             else:
                 self.nonfree_packages.add(pkg)
+
+            if len(ethical_licenses) > 0:
+                self.ethical_packages.add(pkg)
+
 
     # Print all seen licenses in a convenient almost python list
     def list_all_licenses_as_python(self):
@@ -252,4 +275,13 @@ class LicenseFinder(object):
 
         print("\nNon-free packages: %d\n" % len(self.nonfree_packages), file=sys.stderr)
 
-        print("However, there are %d ambiguously licensed packages that vrms cannot certify." % len(self.unknown_packages), file=sys.stderr)
+        if self.ethical_packages:
+            self.list_all_ethical_packages(sys.stderr)
+
+        print("\nThere are %d ambiguously licensed packages that vrms cannot certify." % len(self.unknown_packages), file=sys.stderr)
+
+    def list_all_ethical_packages(self, file=sys.stdout):
+        for epackage in sorted(self.ethical_packages, key=lambda pkg: pkg.name):
+            print("%s: %s" % (epackage.name, epackage.licenses), file=file)
+
+        print("\nPackages with ethical restrictions: %d" % len(self.ethical_packages), file=sys.stderr)

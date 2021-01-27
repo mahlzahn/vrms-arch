@@ -30,6 +30,11 @@ parser.add_option("-a", "--list-licenses",
                   action="store_true",
                   default=False,
                   help="List all licenses")
+parser.add_option("-e", "--list-ethical",
+                  dest="list_ethical",
+                  action="store_true",
+                  default=False,
+                  help="List only non-free packages with 'ethical source' licenses")
 parser.add_option("-u", "--list-unknowns",
                   dest="list_unknowns",
                   action="store_true",
@@ -42,7 +47,7 @@ h = pyalpm.Handle("/", "/var/lib/pacman")
 
 dbs_to_visit = []
 
-if(options.use_global_repos):
+if options.use_global_repos:
     for d in set(os.path.splitext(f)[0] for f in os.listdir("/var/lib/pacman/sync")):
         h.register_syncdb(d, 0)
     dbs_to_visit = h.get_syncdbs()
@@ -59,6 +64,8 @@ for db in dbs_to_visit:
 
 if options.list_unknowns:
     visitor.list_all_unknown_packages()
+elif options.list_ethical:
+    visitor.list_all_ethical_packages()
 elif options.list_all_licenses:
     visitor.list_all_licenses_as_python()
 else:

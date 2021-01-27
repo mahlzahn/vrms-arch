@@ -39,7 +39,7 @@ AMBIGUOUS_PACKAGES = {
     'jre': ['custom:non-free'],
     'jre-openjdk': ['GPL2'],
     'jre-openjdk-headless': ['GPL2'],
-    'jslint': ['BSD', 'MIT'],
+    'jslint': ['custom:BSD and JSON ("Good, not Evil")'],
     'lapack': ['BSD'],
     'lib32-sqlite': ['custom:publicdomain'],
     'libaec': ['BSD2'],
