@@ -14,6 +14,7 @@ AMBIGUOUS_LICENSES = [clean_license_name(license) for license in [
     # CCPL (Creative Commons) should be specified with one of the
     # sublicenses (one of /usr/share/licenses/common/CCPL/*) , some of
     # which are non-free
+    "Creative Commons",
     "CCPL", # ['claws-mail-themes', '0ad', '0ad-data', 'archlinux-lxdm-theme', 'mari0', 'performous-freesongs']
     "CCPL:cc-by-sa-3.0",
 ]]
@@ -44,6 +45,7 @@ FREE_LICENSES = [clean_license_name(license) for license in [
     'BSL',
     'bzip2',
     'CC0',
+    'CC0 1.0',
     'CC-BY-SA',
     'CC-BY-SA-2.5',
     'CC-BY-SA-3.0',
