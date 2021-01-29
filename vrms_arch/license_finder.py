@@ -15,7 +15,7 @@ AMBIGUOUS_LICENSES = [clean_license_name(license) for license in [
     # sublicenses (one of /usr/share/licenses/common/CCPL/*) , some of
     # which are non-free
     "CCPL", # ['claws-mail-themes', '0ad', '0ad-data', 'archlinux-lxdm-theme', 'mari0', 'performous-freesongs']
-    "CCPL:cc-by-sa-3.0",
+    "Creative Commons"
 ]]
 
 FREE_LICENSES = [clean_license_name(license) for license in [
@@ -48,12 +48,15 @@ FREE_LICENSES = [clean_license_name(license) for license in [
     'CC-BY-SA-2.5',
     'CC-BY-SA-3.0',
     'CC BY-SA-4.0',
+    'CCPL:by',
     'CCPL:by-sa',
+    'CCPL:cc-by',
     'CCPL:cc-by-sa',
     'CDDL',
     'CeCILL',
     'CPL',
     'Creative Commons, Attribution 3.0 Unported',
+    'custom:free',
     'dumb',
     'EDL',
     'EPL',
@@ -115,7 +118,6 @@ FREE_LICENSES = [clean_license_name(license) for license in [
     'neovim',
     'nfsidmap',
     'NoCopyright',
-    'none',
     'OASIS',
     'OFL',
     'OFL-1.1',
@@ -179,7 +181,7 @@ FREE_LICENSES = [clean_license_name(license) for license in [
 # technically not open source but deserve mention
 # see https://ethicalsource.dev/
 ETHICAL_LICENSES = [clean_license_name(license) for license in [
-    'custom:BSD and JSON ("Good, not Evil")', # jslint
+    'custom:JSON', # "shall be used for Good, not Evil"
     'custom:Anti-966',
     'custom:Atmosphere',
     'custom:CNPL',
@@ -235,7 +237,7 @@ class LicenseFinder(object):
             amb_licenses = list(filter(lambda x: x in AMBIGUOUS_LICENSES, licenses))
             ethical_licenses = list(filter(lambda x: x in ETHICAL_LICENSES, licenses))
 
-            if len(free_licenses) > 0:
+            if free_licenses and len(free_licenses) == len(licenses):
                 free_pkgs.append(pkg)
             elif len(amb_licenses) > 0 or not licenses:
                 self.unknown_packages.add(pkg)
