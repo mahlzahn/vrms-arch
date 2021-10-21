@@ -190,6 +190,7 @@ ETHICAL_LICENSES = [clean_license_name(license) for license in [
     'custom:NPL',
     'custom:NoHarm',
     'custom:NoHarm-draft',
+    'custom:PPL',
 ]]
 
 class LicenseFinder(object):
