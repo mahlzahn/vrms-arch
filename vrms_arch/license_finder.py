@@ -182,14 +182,15 @@ FREE_LICENSES = [clean_license_name(license) for license in [
 # see https://ethicalsource.dev/
 ETHICAL_LICENSES = [clean_license_name(license) for license in [
     'custom:JSON', # "shall be used for Good, not Evil"
+    'custom:ACSL',
     'custom:Anti-966',
     'custom:Atmosphere',
     'custom:CNPL',
-    'custom:Hippocratic 2.1',
     'custom:Hippocratic',
-    'custom:NPL',
+    'custom:Hippocratic 2.1',
     'custom:NoHarm',
     'custom:NoHarm-draft',
+    'custom:NPL',
     'custom:PPL',
 ]]
 
