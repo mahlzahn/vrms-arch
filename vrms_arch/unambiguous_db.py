@@ -4,6 +4,7 @@ AMBIGUOUS_PACKAGES = {
     'adobe-source-code-pro-fonts': ['OFL'],
     'adobe-source-sans-pro-fonts': ['OFL'],
     'adobe-source-serif-pro-fonts': ['OFL'],
+    'aom': ['BSD', 'custom:free'],
     'amd-ucode': ['custom:non-free'],
     'boost': ['Boost'],
     'boost-libs': ['Boost'],

@@ -16,7 +16,7 @@ AMBIGUOUS_LICENSES = [clean_license_name(license) for license in [
     # which are non-free
     "Creative Commons",
     "CCPL", # ['claws-mail-themes', '0ad', '0ad-data', 'archlinux-lxdm-theme', 'mari0', 'performous-freesongs']
-    "CCPL:cc-by-sa-3.0",
+    "Creative Commons"
 ]]
 
 FREE_LICENSES = [clean_license_name(license) for license in [
@@ -51,12 +51,15 @@ FREE_LICENSES = [clean_license_name(license) for license in [
     'CC-BY-SA-2.5',
     'CC-BY-SA-3.0',
     'CC BY-SA-4.0',
+    'CCPL:by',
     'CCPL:by-sa',
+    'CCPL:cc-by',
     'CCPL:cc-by-sa',
     'CDDL',
     'CeCILL',
     'CPL',
     'Creative Commons, Attribution 3.0 Unported',
+    'custom:free',
     'dumb',
     'EDL',
     'EPL',
@@ -119,7 +122,6 @@ FREE_LICENSES = [clean_license_name(license) for license in [
     'neovim',
     'nfsidmap',
     'NoCopyright',
-    'none',
     'OASIS',
     'OFL',
     'OFL-1.1',
@@ -179,6 +181,23 @@ FREE_LICENSES = [clean_license_name(license) for license in [
     'ZPL',
 ]]
 
+# Licenses with shared source code but with ethical restrictions -
+# technically not open source but deserve mention
+# see https://ethicalsource.dev/
+ETHICAL_LICENSES = [clean_license_name(license) for license in [
+    'custom:JSON', # "shall be used for Good, not Evil"
+    'custom:ACSL',
+    'custom:Anti-966',
+    'custom:Atmosphere',
+    'custom:CNPL',
+    'custom:Hippocratic',
+    'custom:Hippocratic 2.1',
+    'custom:NoHarm',
+    'custom:NoHarm-draft',
+    'custom:NPL',
+    'custom:PPL',
+]]
+
 class LicenseFinder(object):
     def __init__(self):
         # number of packages
@@ -195,6 +214,9 @@ class LicenseFinder(object):
 
         # packages with a known non-free license
         self.nonfree_packages = set()
+
+        # packages with a known "ethical" license
+        self.ethical_packages = set()
 
     def visit_db(self, db):
         pkgs = db.packages
@@ -223,13 +245,18 @@ class LicenseFinder(object):
 
             free_licenses = list(filter(lambda x: x in FREE_LICENSES, licenses))
             amb_licenses = list(filter(lambda x: x in AMBIGUOUS_LICENSES, licenses))
+            ethical_licenses = list(filter(lambda x: x in ETHICAL_LICENSES, licenses))
 
-            if len(free_licenses) > 0:
+            if free_licenses and len(free_licenses) == len(licenses):
                 free_pkgs.append(pkg)
             elif len(amb_licenses) > 0 or not licenses:
                 self.unknown_packages.add(pkg)
             else:
                 self.nonfree_packages.add(pkg)
+
+            if len(ethical_licenses) > 0:
+                self.ethical_packages.add(pkg)
+
 
     # Print all seen licenses in a convenient almost python list
     def list_all_licenses_as_python(self):
@@ -261,4 +288,13 @@ class LicenseFinder(object):
         print("\nNon-free packages: %d (%.2f%% of total)\n" % (len(self.nonfree_packages),
             ((len(self.nonfree_packages) / float(self.num_pkgs)) * 100)), file=sys.stderr)
 
-        print("However, there are %d ambiguously licensed packages that vrms cannot certify." % len(self.unknown_packages), file=sys.stderr)
+        if self.ethical_packages:
+            self.list_all_ethical_packages(sys.stderr)
+
+        print("\nThere are %d ambiguously licensed packages that vrms cannot certify." % len(self.unknown_packages), file=sys.stderr)
+
+    def list_all_ethical_packages(self, file=sys.stdout):
+        for epackage in sorted(self.ethical_packages, key=lambda pkg: pkg.name):
+            print("%s: %s" % (epackage.name, epackage.licenses), file=file)
+
+        print("\nPackages with ethical restrictions: %d" % len(self.ethical_packages), file=sys.stderr)
