@@ -66,7 +66,7 @@ vrms --list-unknowns
 ```
 
 If you're certain that these packages are FOSS, you may add them to the
-["unambiguous database"](src/vrms_arch/unambiguous_db.py) and submit a pull request.
+["disambiguation database"](src/vrms_arch/disambiguation.py) and submit a pull request.
 
 Many packages also carelessly use variant naming of well-known licenses 
 (`GPL-2`, `GPLv2`, etc.) in spite of the package guidelines, 

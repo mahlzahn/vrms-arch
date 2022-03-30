@@ -11,8 +11,8 @@ import pyalpm
 # DFSG/OSI-approved licenses, and the various variants in naming them
 # I see in my package database
 
-from . import license_finder
-from . import unambiguous_db
+from .license_finder import LicenseFinder
+from .disambiguation import UnambiguousDb
 
 def vrms():
     parser = OptionParser()
@@ -52,11 +52,11 @@ def vrms():
         # print("There are %d installed packages." % len(h.get_localdb()))
         dbs_to_visit.append(h.get_localdb())
 
-    visitor = license_finder.LicenseFinder()
+    visitor = LicenseFinder()
 
     for db in dbs_to_visit:
         # print("Reading pacman DB: %s" % db.name, file=sys.stderr)
-        db = unambiguous_db.UnambiguousDb(db)
+        db = UnambiguousDb(db)
         visitor.visit_db(db)
 
     if options.list_unknowns:
