@@ -24,7 +24,7 @@ parser.add_option("-g", "--global-repos",
                   dest="use_global_repos",
                   action="store_true",
                   default=False,
-                  help="Check licenses in all packages in all synced repositories (but not the AUR!), rather than that of locally installed packages")
+                  help="Check licenses in all packages in all synced repositories (might exclude the AUR!), rather than that of locally installed packages")
 parser.add_option("-a", "--list-licenses",
                   dest="list_all_licenses",
                   action="store_true",
