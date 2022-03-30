@@ -8,7 +8,7 @@ license categorization.
 A reimplementation of the original [`vrms`](http://vrms.alioth.debian.org/)
 program from Debian for Arch's Pacman and ALPM.
 
-# Usage
+## Usage
 
 List non-free packages (and count currently ambiguous/uncheckable
 packages, see Caveats)
@@ -24,7 +24,11 @@ include the AUR), not just locally installed packages:
 vrms --global-repos
 ```
 
-# Building
+## Installing
+
+Easiest way is to use the "official" AUR package: [vrms-arch-git](https://aur.archlinux.org/packages/vrms-arch-git)
+
+### From source
 
 Build a package out of local checkout of this source code on Arch:
 
@@ -32,11 +36,9 @@ Build a package out of local checkout of this source code on Arch:
 makepkg --noextract
 ```
     
-This works because I include a `src` symlink that points to `..`,
-which fools `makepkg` into using the local checkout as the source.
-
-The same PKGBUILD, without `--noextract` and the `src` symlink, will
-fetch whatever's on the `stable` branch of the GitHub repo.
+This works because `makepkg` treats `src/` as the package source directory,
+while the `PKGBUILD` contains instructions to `cd ..` where the build command
+can find the needed `setup.cfg` and `.toml` files.
 
 ## Caveats
 
@@ -47,14 +49,15 @@ this indicates that the package does not use an exact copy of one of
 the licenses included in the core
 [`licenses` package](https://www.archlinux.org/packages/core/any/licenses/),
 which provides well-known free licenses at
-`/usr/share/licenses/common`.  However, the guidelines go on
-to say that the license field can be disambiguated in the form of
-`custom: MIT` or `custom: ZLIB`.  Sadly, there are many packages in
-the Arch Linux pacman repositories that specify only `custom`.
+`/usr/share/licenses/common`.
 
 Many commonly used Free Software licenses aren't included in the
 common `licenses` packages because they require editing to be applied
 to a given project, such as the BSD and MIT licenses.
+
+However, the guidelines go on to say that the license field can be disambiguated
+in the form of `custom: MIT` or `custom: ZLIB`. Sadly, there are many packages
+in the Arch Linux pacman repositories that specify only `custom`.
 
 You can list all "ambiguous" packages with:
 
@@ -63,10 +66,10 @@ vrms --list-unknowns
 ```
 
 If you're certain that these packages are FOSS, you may add them to the
-["unambiguous database"](src/unambiguous_db.py) and submit a pull request.
+["unambiguous database"](src/vrms_arch/unambiguous_db.py) and submit a pull request.
 
 Many packages also carelessly use variant naming of well-known licenses 
-(`GPL-2`, `GPLv2`, etc.) in spite of the Packaging Standards, 
+(`GPL-2`, `GPLv2`, etc.) in spite of the package guidelines, 
 causing further confusion. `vrms` will try to "clean up" variant names
 by removing dashes, underscores, turning all letters into lowercase, etc.,
 however, this is not a perfect solution.
