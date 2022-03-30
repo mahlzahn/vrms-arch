@@ -292,6 +292,7 @@ class LicenseFinder(object):
             self.list_all_ethical_packages(sys.stderr)
 
         print("\nThere are %d ambiguously licensed packages that vrms cannot certify." % len(self.unknown_packages), file=sys.stderr)
+        print("Use --list-unknowns to list them (or --help for more info)")
 
     def list_all_ethical_packages(self, file=sys.stdout):
         for epackage in sorted(self.ethical_packages, key=lambda pkg: pkg.name):

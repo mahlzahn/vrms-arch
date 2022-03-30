@@ -1,2 +1,10 @@
 *~
 __pycache__
+
+# PKGBUILD results and artifacts
+pkg/
+*.pkg.*
+
+*.egg-info
+dist/
+build/
