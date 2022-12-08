@@ -1,4 +1,4 @@
-# Maintainer: gardenapple <gardenapple at posteo.net>
+# Maintainer: gardenapple <mailbox@appl.garden>
 # Contributor: Andrew Clunis <andrew@orospakr.ca>
 # Contributor: Ben R <thebenj88@gmail.com>
 # Contributor: Loïc Bidoux <loic.bidoux@owndata.org>

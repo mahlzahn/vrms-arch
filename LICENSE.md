@@ -1,4 +1,4 @@
-Copyright (c) 2022, gardenapple <gardenapple@posteo.net>
+Copyright (c) 2022, gardenapple <mailbox@appl.garden>
 Copyright (c) 2013, Andrew Clunis <andrew@orospakr.ca>
 All rights reserved.
 
